@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { atom, selector, useRecoilState, useRecoilValue } from 'recoil'
 
 import Grid from './Grid'
 
@@ -8,9 +9,17 @@ import Grid from './Grid'
 //   generation: number
 // }
 
+const generationState = atom({
+  key: 'generationState',
+  default: 0
+})
+
 // Main Component to Hold the board
 const GameOfLife = () => {
-  const [generation, setGeneration] = useState<number>(0)
+  const [generation, setGeneration] = useRecoilState(generationState)
+  
+  // another way to read a atoms state
+  // const genCount = useRecoilValue(generationState)
 
   const nextGeneration = () => {
     setGeneration(generation + 1)
@@ -20,6 +29,7 @@ const GameOfLife = () => {
     <div>
       <Grid />
       <h4>Generation: {generation}</h4>
+      <button onClick={() => nextGeneration()} >genUP</button>
     </div>
   )
 }
