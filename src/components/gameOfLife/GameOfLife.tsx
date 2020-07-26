@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import { BaseCSSProperties } from "@material-ui/core/styles/withStyles";
 import Grid from './Grid'
@@ -32,11 +32,11 @@ const GameOfLife = () => {
 
   return (
     <div className={cls.root}>
-      <Grid />
       <div>
         <h4>Generation: {generation}</h4>
         <button onClick={() => nextGeneration()} >genUP</button>
       </div>
+      <Grid />
     </div>
   )
 }

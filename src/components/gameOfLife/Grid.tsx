@@ -1,31 +1,32 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import { BaseCSSProperties } from "@material-ui/core/styles/withStyles";
-import { Container, Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import Node from "./Node";
 
 interface IGrid {
-  rows: number,
-  cols: number
+  rows: number;
+  cols: number;
 }
 
 interface StyleProps {
-  root: BaseCSSProperties,
+  root: BaseCSSProperties;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
-      justifyContent: 'center'
+      display: "flex",
+      justifyContent: "center",
     },
 
     grid: {
-      width: '100%',
-      height: '100%',
-      display: 'grid',
-      gridTemplateColumns: `repeat(25, 20px)`,
-    }
+      width: "100%",
+      height: "100%",
+      display: "grid",
+      gridTemplateColumns: `repeat(30, 25px)`,
+      // NEED TO PASS IN COL SIZE VIA PROPS
+    },
   })
 );
 
@@ -34,36 +35,55 @@ const Grid = () => {
   const cls = useStyles();
   const [grid, setGrid] = useState<any[]>([]);
   const [gridSize, setGridSize] = useState<IGrid>({
+    cols: 30,
     rows: 25,
-    cols: 25
-  })
-  const { rows, cols } = gridSize
+  });
+  const { rows, cols } = gridSize;
 
   // Sets the grid L x W via (rows, cols) input sizes
   // useCallback so the function doesnt re-run from external component updates with React.strictMode
   const initilizeGrid = useCallback(() => {
-    setGrid(() => {
-      const arrGrid: any[] = [];
-      for (let index = 0; index < rows; index++) {
-        arrGrid.push(Array.from(Array(cols), () => 0));
-      }
-      return arrGrid;
-    });
-  }, [])
+    setGrid(() => Array(rows).fill(Array(cols).fill(0)));
+  }, [rows, cols]);
 
   // Setup grid state on component mount
   useEffect(() => {
     initilizeGrid();
   }, [rows, cols]);
 
+  // Handles updating node on click selection
+  const nodeSelectUpdater = (col: number, row: number) => {
+    const newArr = grid.map((column: any[], i: number) => {
+      return column.map((rowPosition: number, j: number) => {
+        if (row === j && col === i) {
+          return 1;
+        } else {
+          return rowPosition;
+        }
+      });
+    });
+    setGrid(newArr);
+    console.log(`Updated Node @ [${col}][${row}] to 1`)
+  };
+
+  // console.table(grid);
+
   return (
     <Paper elevation={5} className={cls.root} square>
-      <div className={cls.grid} >
+      <div className={cls.grid}>
+        {/* We render all grid nodes here */}
         {grid.map((row: any[], r: number) => {
-          return row.map((col: any[], c: number) => <Node key={`${r}_${c}`} />);
+          return row.map((col: any[], c: number) => (
+            <Node
+              key={`${r}_${c}`}
+              // rename col to status as it'll be a 1 or 0
+              isAlive={{ status: col, r, c }}
+              nodeSelectUpdater={nodeSelectUpdater}
+            />
+          ));
         })}
       </div>
-    </Paper >
+    </Paper>
   );
 };
 
