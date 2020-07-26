@@ -13,10 +13,14 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '20px', 
       height: '20px', 
       backgroundColor: 'white', 
-      border: 'solid grey 1px',
-
+      border: 'solid #616363 1px',
+      
       '&:hover': {
-        backgroundColor: '#27A9FF'
+        // opacity: 0,
+        backgroundColor: '#27A9FF',
+        transform: 'scale(1.25)',
+        // transition: 'opacity 2s ease-in',
+        transitionDuration: 300,
       },
     },
   })
