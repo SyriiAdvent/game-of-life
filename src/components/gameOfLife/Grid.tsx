@@ -21,10 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     grid: {
-      display: 'grid',
       width: '100%',
       height: '100%',
-      gridTemplateColumns: `repeat(25, 20px)`
+      display: 'grid',
+      gridTemplateColumns: `repeat(25, 20px)`,
     }
   })
 );
@@ -57,7 +57,7 @@ const Grid = () => {
   }, [rows, cols]);
 
   return (
-    <Paper elevation={4} className={cls.root}>
+    <Paper elevation={5} className={cls.root} square>
       <div className={cls.grid} >
         {grid.map((row: any[], r: number) => {
           return row.map((col: any[], c: number) => <Node key={`${r}_${c}`} />);

@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme: Theme) =>
       border: 'solid #616363 1px',
       
       '&:hover': {
-        // opacity: 0,
         backgroundColor: '#27A9FF',
         transform: 'scale(1.25)',
         // transition: 'opacity 2s ease-in',
