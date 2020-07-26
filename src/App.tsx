@@ -5,12 +5,10 @@ import NavigationBar from './components/navbar/NavigationBar';
 
 function App() {
   return (
-    <>
     <ColorManager>
       <NavigationBar />
       <GameOfLife />
     </ColorManager>
-    </>
   );
 }
 
