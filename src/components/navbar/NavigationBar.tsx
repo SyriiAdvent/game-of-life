@@ -30,14 +30,14 @@ const NavigationBar = () => {
     <div className={cls.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={cls.menuButton} color="inherit" aria-label="menu">
+          {/* <IconButton edge="start" className={cls.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h6" className={cls.title}>
             The Game of Life
           </Typography>
           {/* <Switch /> temporary until actual theme changer */}
-          <Button color="inherit">Login</Button>
+          {/* <Button color="inherit">Login</Button> */}
         </Toolbar>
       </AppBar>
     </div>
