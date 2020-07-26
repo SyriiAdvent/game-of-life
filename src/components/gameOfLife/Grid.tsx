@@ -1,43 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import { BaseCSSProperties } from "@material-ui/core/styles/withStyles";
+import { Container, Paper } from "@material-ui/core";
 import Node from "./Node";
+
+interface IGrid {
+  rows: number,
+  cols: number
+}
+
+interface StyleProps {
+  root: BaseCSSProperties,
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: theme.spacing(1),
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "center",
-      "& > *": {
-        margin: theme.spacing(1),
-        width: theme.spacing(16),
-        height: theme.spacing(16),
-      },
+      display: 'flex',
+      justifyContent: 'center'
     },
 
-    node: {
-      width: '20px', 
-      height: '20px', 
-      backgroundColor: 'cyan'
-    },
-
-    paper: {
-      width: 400,
-      height: 300,
-    },
+    grid: {
+      display: 'grid',
+      width: '100%',
+      height: '100%',
+      gridTemplateColumns: `repeat(25, 20px)`
+    }
   })
 );
 
 // We will create the grid in this component
 const Grid = () => {
   const cls = useStyles();
-  const [grid, setGrid] = useState([]);
-  const rows = 50;
-  const cols = 50;
+  const [grid, setGrid] = useState<any[]>([]);
+  const [gridSize, setGridSize] = useState<IGrid>({
+    rows: 25,
+    cols: 25
+  })
+  const { rows, cols } = gridSize
 
-  const initilizeGrid = () => {
+  // Sets the grid L x W via (rows, cols) input sizes
+  // useCallback so the function doesnt re-run from external component updates with React.strictMode
+  const initilizeGrid = useCallback(() => {
     setGrid(() => {
       const arrGrid: any[] = [];
       for (let index = 0; index < rows; index++) {
@@ -45,21 +49,21 @@ const Grid = () => {
       }
       return arrGrid;
     });
-  };
+  }, [])
 
+  // Setup grid state on component mount
   useEffect(() => {
     initilizeGrid();
-  }, [grid]);
+  }, [rows, cols]);
 
   return (
-    <div className={cls.root}>
-      {console.log(grid)}
-      <div>
-        {grid.length > 2 ? grid.map((row, r) => {
-          row.map((col, c) => <div key={`${r}_${c}`} className={cls.node}/>);
-        }): null}
+    <Paper elevation={4} className={cls.root}>
+      <div className={cls.grid} >
+        {grid.map((row: any[], r: number) => {
+          return row.map((col: any[], c: number) => <Node key={`${r}_${c}`} />);
+        })}
       </div>
-    </div>
+    </Paper >
   );
 };
 
