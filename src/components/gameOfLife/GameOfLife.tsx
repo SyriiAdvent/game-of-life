@@ -34,9 +34,9 @@ const GameOfLife = () => {
     <div className={cls.root}>
       <div>
         <h4>Generation: {generation}</h4>
-        <button onClick={() => nextGeneration()} >genUP</button>
+        <button onClick={() => nextGeneration()} >next</button>
       </div>
-      <Grid />
+      <Grid generation={generation} />
     </div>
   )
 }

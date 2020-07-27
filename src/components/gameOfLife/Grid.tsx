@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 // We will create the grid in this component
-const Grid = () => {
+const Grid = (props: { generation: number }) => {
   const cls = useStyles();
   const [grid, setGrid] = useState<any[]>([]);
   const [gridSize, setGridSize] = useState<IGrid>({
@@ -39,6 +39,8 @@ const Grid = () => {
     rows: 15,
   });
   const { rows, cols } = gridSize;
+
+
 
   // Sets the grid L x W via (rows, cols) input sizes
   // useCallback so the function doesnt re-run from external component updates with React.strictMode
@@ -56,7 +58,7 @@ const Grid = () => {
     const newArr = grid.map((column: any[], i: number) => {
       return column.map((rowPosition: number, j: number) => {
         if (row === j && col === i) {
-          return 1;
+          return rowPosition === 0 ? 1 : 0
         } else {
           return rowPosition;
         }
@@ -65,6 +67,63 @@ const Grid = () => {
     setGrid(newArr);
     console.log(`Updated Node @ [${col}][${row}] to 1`);
   };
+
+
+  // test game logic zone
+  const [liveGame, setLiveGame] = useState(false)
+
+  const liveRef = useRef(liveGame)
+  liveRef.current = liveGame
+
+  const startGame = () => {
+    setLiveGame(prev => {
+      return !prev
+    })
+  }
+
+  const simulateAutomata = useCallback(() => {
+    const anscestor = [...grid]
+
+    const neighborPositions = [
+      [1, 1],
+      [-1, -1],
+      [1, 0],
+      [-1, 0],
+      [0, 1],
+      [0, -1],
+      [1, -1],
+      [-1, 1]
+    ]
+
+    if(!liveRef.current) {
+      return
+    } else {
+      for (let i = 0; i < anscestor.length; i++) {
+        for (let j = 0; j < anscestor[i].length; j++) {
+          let neighbors = 0
+          neighborPositions.forEach(([x,y]) => {
+            const t = i + x;
+            const k = j + y;
+            if (t >= 0 && t < rows && k >= 0 && k < cols) {
+              neighbors += grid[t][k];
+            }
+          });
+          if (neighbors < 2 || neighbors > 3) {
+            anscestor[i][j] = 0;
+          } else if (grid[i][j] === 0 && neighbors === 3) {
+            anscestor[i][j] = 1;
+          }
+        }
+      }
+    }
+
+    setGrid(anscestor)
+    setTimeout(simulateAutomata, 1000);
+  }, [])
+
+  // test game logic zone
+
+  console.log(grid);
 
   return (
     <Paper elevation={5} className={cls.root} square>
@@ -80,6 +139,15 @@ const Grid = () => {
             />
           ));
         })}
+        <button 
+          onClick={() => {
+            startGame()
+            if(liveGame) {
+              liveRef.current = true
+              simulateAutomata()
+            }
+          }}
+          >test grid</button>
       </div>
     </Paper>
   );
