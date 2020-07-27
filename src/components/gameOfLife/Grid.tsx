@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import { BaseCSSProperties } from "@material-ui/core/styles/withStyles";
 import { Paper } from "@material-ui/core";
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       height: "100%",
       display: "grid",
-      gridTemplateColumns: `repeat(30, 25px)`,
+      gridTemplateColumns: `repeat(15, 25px)`,
       // NEED TO PASS IN COL SIZE VIA PROPS
     },
   })
@@ -35,8 +35,8 @@ const Grid = () => {
   const cls = useStyles();
   const [grid, setGrid] = useState<any[]>([]);
   const [gridSize, setGridSize] = useState<IGrid>({
-    cols: 30,
-    rows: 25,
+    cols: 15,
+    rows: 15,
   });
   const { rows, cols } = gridSize;
 
@@ -63,10 +63,8 @@ const Grid = () => {
       });
     });
     setGrid(newArr);
-    console.log(`Updated Node @ [${col}][${row}] to 1`)
+    console.log(`Updated Node @ [${col}][${row}] to 1`);
   };
-
-  // console.table(grid);
 
   return (
     <Paper elevation={5} className={cls.root} square>
