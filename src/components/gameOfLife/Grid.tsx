@@ -34,13 +34,12 @@ const useStyles = makeStyles((theme: Theme) =>
 const Grid = (props: { generation: number }) => {
   const cls = useStyles();
   const [grid, setGrid] = useState<any[]>([]);
+  const [nextGrid, setNextGrid] = useState<any[]>([])
   const [gridSize, setGridSize] = useState<IGrid>({
     cols: 15,
     rows: 15,
   });
   const { rows, cols } = gridSize;
-
-
 
   // Sets the grid L x W via (rows, cols) input sizes
   // useCallback so the function doesnt re-run from external component updates with React.strictMode
@@ -67,6 +66,18 @@ const Grid = (props: { generation: number }) => {
     setGrid(newArr);
     console.log(`Updated Node @ [${col}][${row}] to 1`);
   };
+
+  const updateGrid = (arr: any) => {
+    setGrid((prev: any) => {
+      return arr
+    })
+  }
+
+  const newNextGrid = (arr: any) => {
+    setNextGrid((prev: any) => {
+      return arr
+    })
+  }
 
 
   // test game logic zone
@@ -95,17 +106,17 @@ const Grid = (props: { generation: number }) => {
       [-1, 1]
     ]
 
-    if(!liveRef.current) {
-      return
-    } else {
+    if(JSON.stringify(grid) !== JSON.stringify(nextGrid)) {
+      console.log('true new array hit');
       for (let i = 0; i < anscestor.length; i++) {
         for (let j = 0; j < anscestor[i].length; j++) {
           let neighbors = 0
           neighborPositions.forEach(([x,y]) => {
-            const t = i + x;
+            const t = i + x;  
             const k = j + y;
             if (t >= 0 && t < rows && k >= 0 && k < cols) {
               neighbors += grid[t][k];
+              console.log(`neightbors added: ${neighbors}`)
             }
           });
           if (neighbors < 2 || neighbors > 3) {
@@ -115,11 +126,24 @@ const Grid = (props: { generation: number }) => {
           }
         }
       }
+    } else {
+      console.log('else was hit');
+      return anscestor
     }
 
-    setGrid(anscestor)
-    setTimeout(simulateAutomata, 1000);
+    if(liveRef.current) {
+      setTimeout(simulateAutomata, 1000)
+    }
+
+    return anscestor
   }, [])
+
+  const nextGenome = simulateAutomata()
+
+  useEffect(() => {
+    newNextGrid(nextGenome)
+  }, [])
+
 
   // test game logic zone
 
@@ -141,11 +165,7 @@ const Grid = (props: { generation: number }) => {
         })}
         <button 
           onClick={() => {
-            startGame()
-            if(liveGame) {
-              liveRef.current = true
-              simulateAutomata()
-            }
+            updateGrid(nextGenome)
           }}
           >test grid</button>
       </div>
