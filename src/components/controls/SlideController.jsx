@@ -5,6 +5,9 @@ import Slider from '@material-ui/core/Slider';
 import { useRecoilState } from 'recoil'
 import { animSpeed } from '../../stateStore/atoms'
 
+//force animate slider if user clicks
+import './SlideController.css'
+
 const useStyles = makeStyles((theme) =>
   createStyles({
     slideCard: {
@@ -26,13 +29,13 @@ const useStyles = makeStyles((theme) =>
 const SlideController = () => {
   const cls = useStyles();
   const [speed, setSpeed] = useRecoilState(animSpeed)
-  const sliderText = (value) => `${value}ms`
+  const sliderText = (val) => `${val}ms`
   const updateSpeed = (value) => {
     setSpeed(value)
   }
   const marks = [
     {
-      value: 100,
+      value: 0,
       label: 'Fast',
     },
     {
@@ -66,10 +69,10 @@ const SlideController = () => {
         aria-labelledby="discrete-slider-small-steps"
         step={100}
         marks={marks}
-        min={100}
+        min={0}
         max={3000}
         valueLabelDisplay="auto"
-        onChange={(e, val) => setSpeed(val)}
+        onChange={(e, val) => updateSpeed(val)}
       />
     </Paper>
   )
