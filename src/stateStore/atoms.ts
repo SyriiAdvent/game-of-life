@@ -29,3 +29,8 @@ export const startGame = atom({
   key: 'startGame',
   default: false
 })
+
+export const nextLife = atom({
+  key: 'nextLife',
+  default: false
+})

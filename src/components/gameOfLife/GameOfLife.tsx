@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       alignItems: 'center',
       minWidth: 500,
-      width: 800
+      width: 800,
     },
   })
 );
@@ -39,13 +39,12 @@ const useStyles = makeStyles((theme: Theme) =>
 // Main Component to Hold the board
 const GameOfLife = () => {
   const cls = useStyles();
-  const [speed, setSpeed] = useRecoilState(animSpeed)
   const generation = useRecoilValue(currentGeneration)
 
   return (
     <div className={cls.root}>
       <Grid />
-      <Card className={cls.controlBox}>
+      <Card elevation={2} className={cls.controlBox}>
         <h4>Generation: {generation}</h4>
         <PlayerButton />
         <SlideController  />
