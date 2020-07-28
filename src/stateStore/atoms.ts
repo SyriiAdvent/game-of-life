@@ -20,6 +20,7 @@ export const gridSize = atom({
 
 // Controller Atoms
 
+
 export const animSpeed = atom({
   key: 'animSpeed',
   default: 500,
@@ -37,5 +38,10 @@ export const nextLife = atom({
 
 export const resetGame = atom({
   key: 'resetGame',
+  default: false
+})
+
+export const mouseDownState = atom({
+  key: 'mouseDownState',
   default: false
 })
