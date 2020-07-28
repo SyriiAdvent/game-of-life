@@ -14,7 +14,7 @@ export const gridSize = atom({
   key: 'generation',
   default: {
     cols: 25,
-    rows: 25
+    rows: 20
   }
 });
 
