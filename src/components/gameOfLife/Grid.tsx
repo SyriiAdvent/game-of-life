@@ -5,7 +5,7 @@ import { Paper } from "@material-ui/core";
 import Node from "./Node";
 import produce from 'immer'
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { generationState, animSpeed, startGame } from '../../stateStore/atoms'
+import { generationState, animSpeed, startGame, nextLife } from '../../stateStore/atoms'
 
 interface StyleProps {
   root: BaseCSSProperties;
@@ -36,11 +36,13 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
   );
+
   
   // We will create the grid in this component
   const Grid = () => {
   const cls = useStyles();
   const [generation, setGeneration] = useRecoilState(generationState);
+  const [nextFrame, setNextFrame] = useRecoilState(nextLife)
   const speed = useRecoilValue(animSpeed)
   const [grid, setGrid] = useState<IGrid>([]);
   const [gridSize, setGridSize] = useState<IGridSize>({
@@ -61,6 +63,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
   const speedRef = useRef(speed)
   speedRef.current = speed
+  const nextFrameRef = useRef(nextFrame)
+  nextFrameRef.current = nextFrame
 
   // Sets the grid L x W via (rows, cols) input sizes
   // useCallback so the function doesnt re-run from external component updates with React.strictMode
@@ -95,40 +99,49 @@ const useStyles = makeStyles((theme: Theme) =>
   liveRef.current = liveGame
 
   const simulateAutomata = useCallback(() => {
-    if(!liveRef.current) {
-      return 
-    }
-    
-    setGrid(origin => {
-      return produce(origin, ancestor => {
-        for (let i = 0; i < ancestor.length; i++) {
-          for (let j = 0; j < ancestor[i].length; j++) {
-            let neighbors = 0
-            neighborPositions.forEach(([x,y]) => {
-              const t = i + x;
-              const k = j + y;
-              if (t >= 0 && t < rows && k >= 0 && k < cols) {
-                neighbors += origin[t][k];
+      setGrid(origin => {
+        return produce(origin, ancestor => {
+          for (let i = 0; i < ancestor.length; i++) {
+            for (let j = 0; j < ancestor[i].length; j++) {
+              let neighbors = 0
+              neighborPositions.forEach(([x,y]) => {
+                const t = i + x;
+                const k = j + y;
+                if (t >= 0 && t < rows && k >= 0 && k < cols) {
+                  neighbors += origin[t][k];
+                }
+              });
+              if (neighbors < 2 || neighbors > 3) {
+                ancestor[i][j] = 0;
+              } else if (origin[i][j] === 0 && neighbors === 3) {
+                ancestor[i][j] = 1;
               }
-            });
-            if (neighbors < 2 || neighbors > 3) {
-              ancestor[i][j] = 0;
-            } else if (origin[i][j] === 0 && neighbors === 3) {
-              ancestor[i][j] = 1;
             }
           }
-        }
+        })
       })
-    })
+
     setGeneration(prev => prev + 1)
-    setTimeout(simulateAutomata, speedRef.current);
+    if(liveRef.current) {
+      setTimeout(simulateAutomata, speedRef.current);
+    }
+
   }, [])
 
   useEffect(() => {
     if(liveRef.current) {
       simulateAutomata()
     }
-  }, [liveGame])
+    if(nextFrameRef.current) {
+      console.log('hit');
+      simulateAutomata()
+      setNextFrame(false)
+    }
+  }, [liveRef.current, nextFrameRef.current])
+
+  const nextGeneration = () => {
+    simulateAutomata()
+  }
 
   // test game logic zone
 
