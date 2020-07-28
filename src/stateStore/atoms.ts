@@ -45,3 +45,8 @@ export const mouseDownState = atom({
   key: 'mouseDownState',
   default: false
 })
+
+export const gridStatus = atom({
+  key: 'gridStatus',
+  default: false
+})
