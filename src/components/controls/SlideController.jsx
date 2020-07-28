@@ -16,12 +16,33 @@ const useStyles = makeStyles(() =>
 const SlideController = () => {
   const cls = useStyles();
   const [speed, setSpeed] = useRecoilState(animSpeed)
-  const sliderText = (value) => `${value}`
-
+  const sliderText = (value) => `${value}ms`
   const updateSpeed = (value) => {
     setSpeed(value)
   }
-
+  const marks = [
+    {
+      value: 100,
+      label: 'Fast',
+    },
+    {
+      value: 500,
+      label: 'Normal',
+    },
+    {
+      value: 1000,
+      label: 'Slower',
+    },
+    {
+      value: 2000,
+      label: 'Slow',
+    },
+    {
+      value: 3000,
+      label: 'Slow-Mo!',
+    },
+  ];
+  
   return (
     <>
       <Typography id="discrete-slider-small-steps" gutterBottom>
@@ -33,10 +54,10 @@ const SlideController = () => {
         defaultValue={speed}
         getAriaValueText={sliderText}
         aria-labelledby="discrete-slider-small-steps"
-        step={50}
-        marks
-        min={50}
-        max={5000}
+        step={100}
+        marks={marks}
+        min={100}
+        max={3000}
         valueLabelDisplay="auto"
         onChange={(e, val) => setSpeed(val)}
       />
