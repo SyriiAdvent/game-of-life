@@ -34,3 +34,8 @@ export const nextLife = atom({
   key: 'nextLife',
   default: false
 })
+
+export const resetGame = atom({
+  key: 'resetGame',
+  default: false
+})

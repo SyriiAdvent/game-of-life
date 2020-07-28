@@ -5,7 +5,7 @@ import { Paper } from "@material-ui/core";
 import Node from "./Node";
 import produce from 'immer'
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { generationState, animSpeed, startGame, nextLife } from '../../stateStore/atoms'
+import { generationState, animSpeed, startGame, nextLife, resetGame } from '../../stateStore/atoms'
 
 interface StyleProps {
   root: BaseCSSProperties;
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
   const cls = useStyles();
   const [generation, setGeneration] = useRecoilState(generationState);
   const [nextFrame, setNextFrame] = useRecoilState(nextLife)
+  const [reset, setReset] = useRecoilState(resetGame)
   const speed = useRecoilValue(animSpeed)
   const [grid, setGrid] = useState<IGrid>([]);
   const [gridSize, setGridSize] = useState<IGridSize>({
@@ -97,6 +98,8 @@ const useStyles = makeStyles((theme: Theme) =>
   const liveGame = useRecoilValue(startGame)
   const liveRef = useRef(liveGame)
   liveRef.current = liveGame
+  const resetRef = useRef(reset)
+  resetRef.current = reset
 
   const simulateAutomata = useCallback(() => {
       setGrid(origin => {
@@ -138,6 +141,11 @@ const useStyles = makeStyles((theme: Theme) =>
       setNextFrame(false)
     }
   }, [liveRef.current, nextFrameRef.current])
+
+  useEffect(() => {
+    initilizeGrid()
+    setGeneration(0)
+  }, [resetRef.current])
 
   const nextGeneration = () => {
     simulateAutomata()
