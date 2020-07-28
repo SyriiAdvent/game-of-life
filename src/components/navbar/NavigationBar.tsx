@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Switch } from '@material-ui/core';
+import PresetsMenu from './PresetsMenu';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,9 +31,11 @@ const NavigationBar = () => {
     <div className={cls.root}>
       <AppBar position="static">
         <Toolbar>
+          {/* <PresetsMenu /> */}
           {/* <IconButton edge="start" className={cls.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton> */}
+          
           <Typography variant="h6" className={cls.title}>
             The Game of Life
           </Typography>

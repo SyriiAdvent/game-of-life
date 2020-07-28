@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      minWidth: 500,
       width: 800,
+      backgroundColor: '#F0F0F0'
     },
   })
 );
