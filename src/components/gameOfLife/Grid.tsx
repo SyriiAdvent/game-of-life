@@ -5,7 +5,7 @@ import { Paper } from "@material-ui/core";
 import Node from "./Node";
 import produce from 'immer'
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { generationState, animSpeed } from '../../stateStore/atoms'
+import { generationState, animSpeed, startGame } from '../../stateStore/atoms'
 
 interface StyleProps {
   root: BaseCSSProperties;
@@ -90,16 +90,9 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
   // test game logic zone
-  const [liveGame, setLiveGame] = useState(true)
-
+  const liveGame = useRecoilValue(startGame)
   const liveRef = useRef(liveGame)
   liveRef.current = liveGame
-
-  const startGame = () => {
-    setLiveGame(prev => {
-      return !prev
-    })
-  }
 
   const simulateAutomata = useCallback(() => {
     if(!liveRef.current) {
@@ -131,7 +124,11 @@ const useStyles = makeStyles((theme: Theme) =>
     setTimeout(simulateAutomata, speedRef.current);
   }, [])
 
-  console.log(grid);
+  useEffect(() => {
+    if(liveRef.current) {
+      simulateAutomata()
+    }
+  }, [liveGame])
 
   // test game logic zone
 
@@ -149,11 +146,6 @@ const useStyles = makeStyles((theme: Theme) =>
             />
           ));
         })}
-        <button 
-          onClick={() => {
-            simulateAutomata()
-          }}
-          >test grid</button>
       </div>
     </Paper>
   );
