@@ -1,14 +1,24 @@
 import React from 'react'
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { Typography } from '@material-ui/core';
+import { Typography, Paper } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import { useRecoilState } from 'recoil'
 import { animSpeed } from '../../stateStore/atoms'
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme) =>
   createStyles({
+    slideCard: {
+      width: 400,
+      margin: theme.spacing(2),
+      padding: theme.spacing(2),
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     speedSlider: {
-      width: 500
+      width: 350,
+      // margin: theme.spacing(2),
     }
   })
 );
@@ -16,14 +26,35 @@ const useStyles = makeStyles(() =>
 const SlideController = () => {
   const cls = useStyles();
   const [speed, setSpeed] = useRecoilState(animSpeed)
-  const sliderText = (value) => `${value}`
-
+  const sliderText = (value) => `${value}ms`
   const updateSpeed = (value) => {
     setSpeed(value)
   }
-
+  const marks = [
+    {
+      value: 100,
+      label: 'Fast',
+    },
+    {
+      value: 500,
+      label: 'Normal',
+    },
+    {
+      value: 1000,
+      label: 'Slower',
+    },
+    {
+      value: 2000,
+      label: 'Slow',
+    },
+    {
+      value: 3000,
+      label: 'Slow-Mo!',
+    },
+  ];
+  
   return (
-    <>
+    <Paper className={cls.slideCard}>
       <Typography id="discrete-slider-small-steps" gutterBottom>
         Life Speed
         </Typography>
@@ -33,14 +64,14 @@ const SlideController = () => {
         defaultValue={speed}
         getAriaValueText={sliderText}
         aria-labelledby="discrete-slider-small-steps"
-        step={50}
-        marks
-        min={50}
-        max={5000}
+        step={100}
+        marks={marks}
+        min={100}
+        max={3000}
         valueLabelDisplay="auto"
         onChange={(e, val) => setSpeed(val)}
       />
-    </>
+    </Paper>
   )
 }
 

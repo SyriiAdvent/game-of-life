@@ -14,11 +14,18 @@ export const gridSize = atom({
   key: 'generation',
   default: {
     cols: 25,
-    rows: 25
+    rows: 20
   }
 });
 
+// Controller Atoms
+
 export const animSpeed = atom({
   key: 'animSpeed',
-  default: 300,
+  default: 500,
 });
+
+export const startGame = atom({
+  key: 'startGame',
+  default: false
+})
