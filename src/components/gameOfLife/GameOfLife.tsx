@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import { BaseCSSProperties } from "@material-ui/core/styles/withStyles";
+import { Card, Paper } from '@material-ui/core';
 import Grid from './Grid'
 import SlideController from '../controls/SlideController'
 import PlayerButton from '../controls/PlayerButton';
@@ -15,14 +16,22 @@ interface StyleProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: theme.spacing(1),
+      padding: theme.spacing(1),
+      // width: "99%",
       display: "flex",
       flexWrap: "wrap",
       justifyContent: "space-evenly",
+      // backgroundColor: '#F5F5F5'
     },
-    speedSlider: {
-      width: 500
-    }
+    controlBox: {
+      margin: theme.spacing(2),
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minWidth: 500,
+      width: 800
+    },
   })
 );
 
@@ -36,11 +45,11 @@ const GameOfLife = () => {
   return (
     <div className={cls.root}>
       <Grid />
-      <div>
+      <Card className={cls.controlBox}>
         <h4>Generation: {generation}</h4>
         <PlayerButton />
-        <SlideController />
-      </div>
+        <SlideController  />
+      </Card>
     </div>
   )
 }

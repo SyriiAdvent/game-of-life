@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
   const [grid, setGrid] = useState<IGrid>([]);
   const [gridSize, setGridSize] = useState<IGridSize>({
     cols: 25,
-    rows: 25,
+    rows: 20,
   });
   const { rows, cols } = gridSize;
   const neighborPositions = [

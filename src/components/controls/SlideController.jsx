@@ -1,14 +1,24 @@
 import React from 'react'
 import { createStyles, makeStyles } from "@material-ui/core/styles";
-import { Typography } from '@material-ui/core';
+import { Typography, Paper } from '@material-ui/core';
 import Slider from '@material-ui/core/Slider';
 import { useRecoilState } from 'recoil'
 import { animSpeed } from '../../stateStore/atoms'
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme) =>
   createStyles({
+    slideCard: {
+      width: 400,
+      margin: theme.spacing(2),
+      padding: theme.spacing(2),
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     speedSlider: {
-      width: 500
+      width: 350,
+      // margin: theme.spacing(2),
     }
   })
 );
@@ -44,7 +54,7 @@ const SlideController = () => {
   ];
   
   return (
-    <>
+    <Paper className={cls.slideCard}>
       <Typography id="discrete-slider-small-steps" gutterBottom>
         Life Speed
         </Typography>
@@ -61,7 +71,7 @@ const SlideController = () => {
         valueLabelDisplay="auto"
         onChange={(e, val) => setSpeed(val)}
       />
-    </>
+    </Paper>
   )
 }
 
