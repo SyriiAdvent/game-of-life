@@ -4,6 +4,8 @@ import { BaseCSSProperties } from "@material-ui/core/styles/withStyles";
 import { Paper } from "@material-ui/core";
 import Node from "./Node";
 import produce from 'immer'
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { generationState, animSpeed } from '../../stateStore/atoms'
 
 interface StyleProps {
   root: BaseCSSProperties;
@@ -29,19 +31,21 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       height: "100%",
       display: "grid",
-      gridTemplateColumns: `repeat(15, 25px)`,
+      gridTemplateColumns: `repeat(25, 25px)`,
       // NEED TO PASS IN COL SIZE VIA PROPS
     },
   })
-);
-
-// We will create the grid in this component
-const Grid = (props: { generation: number }) => {
+  );
+  
+  // We will create the grid in this component
+  const Grid = () => {
   const cls = useStyles();
+  const [generation, setGeneration] = useRecoilState(generationState);
+  const speed = useRecoilValue(animSpeed)
   const [grid, setGrid] = useState<IGrid>([]);
   const [gridSize, setGridSize] = useState<IGridSize>({
-    cols: 15,
-    rows: 15,
+    cols: 25,
+    rows: 25,
   });
   const { rows, cols } = gridSize;
   const neighborPositions = [
@@ -54,6 +58,9 @@ const Grid = (props: { generation: number }) => {
     [1, -1],
     [-1, 1]
   ]
+
+  const speedRef = useRef(speed)
+  speedRef.current = speed
 
   // Sets the grid L x W via (rows, cols) input sizes
   // useCallback so the function doesnt re-run from external component updates with React.strictMode
@@ -120,13 +127,13 @@ const Grid = (props: { generation: number }) => {
         }
       })
     })
-
-    // setTimeout(simulateAutomata, 1000);
+    setGeneration(prev => prev + 1)
+    setTimeout(simulateAutomata, speedRef.current);
   }, [])
 
-  // test game logic zone
-
   console.log(grid);
+
+  // test game logic zone
 
   return (
     <Paper elevation={5} className={cls.root} square>
