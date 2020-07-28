@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
-import { startGame, nextLife, resetGame } from '../../stateStore/atoms'
+import { startGame, nextLife, resetGame, generationState } from '../../stateStore/atoms'
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -10,6 +10,7 @@ import ReplayIcon from '@material-ui/icons/Replay';
 
 const PlayerButton = () => {
   const [liveGame, setLiveGame] = useRecoilState(startGame)
+  const [generation, setGeneration] = useRecoilState(generationState);
   const [nextFrame, setNextFrame] = useRecoilState(nextLife)
   const [reset, setReset] = useRecoilState(resetGame)
   return (
@@ -32,7 +33,11 @@ const PlayerButton = () => {
       ><NavigateNextIcon /></IconButton>
       <IconButton
         color='primary'
-        onClick={() => setReset(true)}
+        onClick={() => {
+          setLiveGame(() => false)
+          setReset(true)
+          }
+        }
       ><ReplayIcon /></IconButton>
     </div>
   )

@@ -102,33 +102,35 @@ const useStyles = makeStyles((theme: Theme) =>
   resetRef.current = reset
 
   const simulateAutomata = useCallback(() => {
-      setGrid(origin => {
-        return produce(origin, ancestor => {
-          for (let i = 0; i < ancestor.length; i++) {
-            for (let j = 0; j < ancestor[i].length; j++) {
-              let neighbors = 0
-              neighborPositions.forEach(([x,y]) => {
-                const t = i + x;
-                const k = j + y;
-                if (t >= 0 && t < rows && k >= 0 && k < cols) {
-                  neighbors += origin[t][k];
-                }
-              });
-              if (neighbors < 2 || neighbors > 3) {
-                ancestor[i][j] = 0;
-              } else if (origin[i][j] === 0 && neighbors === 3) {
-                ancestor[i][j] = 1;
+    if(!liveRef.current && !nextFrameRef.current || resetRef.current) {
+      return
+    }
+    setGrid(origin => {
+      return produce(origin, ancestor => {
+        for (let i = 0; i < ancestor.length; i++) {
+          for (let j = 0; j < ancestor[i].length; j++) {
+            let neighbors = 0
+            neighborPositions.forEach(([x,y]) => {
+              const t = i + x;
+              const k = j + y;
+              if (t >= 0 && t < rows && k >= 0 && k < cols) {
+                neighbors += origin[t][k];
               }
+            });
+            if (neighbors < 2 || neighbors > 3) {
+              ancestor[i][j] = 0;
+            } else if (origin[i][j] === 0 && neighbors === 3) {
+              ancestor[i][j] = 1;
             }
           }
-        })
+        }
       })
+    })
 
-    setGeneration(prev => prev + 1)
     if(liveRef.current) {
       setTimeout(simulateAutomata, speedRef.current);
     }
-
+    setGeneration(prev => prev + 1)
   }, [])
 
   useEffect(() => {
@@ -136,15 +138,16 @@ const useStyles = makeStyles((theme: Theme) =>
       simulateAutomata()
     }
     if(nextFrameRef.current) {
-      console.log('hit');
       simulateAutomata()
       setNextFrame(false)
     }
   }, [liveRef.current, nextFrameRef.current])
 
+  // reset grid and game logic here
   useEffect(() => {
     initilizeGrid()
     setGeneration(0)
+    setReset(false)
   }, [resetRef.current])
 
   const nextGeneration = () => {
