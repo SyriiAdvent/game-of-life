@@ -50,3 +50,8 @@ export const gridStatus = atom({
   key: 'gridStatus',
   default: false
 })
+
+export const randomizeGrid = atom({
+  key: 'randomizeGrid',
+  default: false
+})

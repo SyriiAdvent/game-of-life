@@ -5,7 +5,7 @@ import { Paper } from "@material-ui/core";
 import Node from "./Node";
 import produce from 'immer'
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { generationState, animSpeed, startGame, nextLife, resetGame } from '../../stateStore/atoms'
+import { generationState, animSpeed, startGame, nextLife, resetGame, randomizeGrid } from '../../stateStore/atoms'
 import { mouseStatus } from '../../stateStore/selecters'
 
 interface StyleProps {
@@ -45,6 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
   const [generation, setGeneration] = useRecoilState(generationState);
   const [nextFrame, setNextFrame] = useRecoilState(nextLife)
   const [reset, setReset] = useRecoilState(resetGame)
+  const [random, setRandom] = useRecoilState(randomizeGrid)
+  const liveGame = useRecoilValue(startGame)
   const speed = useRecoilValue(animSpeed)
   const mouseDown = useRecoilValue(mouseStatus)
   const [grid, setGrid] = useState<IGrid>([]);
@@ -75,6 +77,21 @@ const useStyles = makeStyles((theme: Theme) =>
     setGrid(() => Array(rows).fill(Array(cols).fill(0)));
   }, [rows, cols]);
 
+  const randNum = () => {
+    let x = Math.round(Math.random())
+    return x
+  }
+
+  const initRandomGrid = useCallback(() => {
+    setGrid(() => {
+      const arrGrid: any[] = [];
+      for (let index = 0; index < rows; index++) {
+        arrGrid.push(Array.from(Array(cols), () => Math.round(Math.random())));
+      }
+      return arrGrid;
+    });
+  }, [rows, cols]);
+
   // Setup grid state on component mount
   useEffect(() => {
     initilizeGrid();
@@ -100,11 +117,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
   // test game logic zone
-  const liveGame = useRecoilValue(startGame)
+
+  // Game is or isnt running Ref
   const liveRef = useRef(liveGame)
   liveRef.current = liveGame
+  // Reset Game Cycle Ref
   const resetRef = useRef(reset)
   resetRef.current = reset
+  // randomize Grid Ref
+  const randomizeRef = useRef(random)
+  randomizeRef.current = random
 
   const simulateAutomata = useCallback(() => {
     if(!liveRef.current && !nextFrameRef.current || resetRef.current) {
@@ -150,11 +172,17 @@ const useStyles = makeStyles((theme: Theme) =>
 
   // reset grid and game logic here
   useEffect(() => {
-    initilizeGrid()
+    if(randomizeRef.current) {
+      initRandomGrid()
+      setRandom(false)
+    } else if(resetRef.current) {
+      initilizeGrid()
+    }
     setGeneration(0)
     setReset(false)
-  }, [resetRef.current])
+  }, [resetRef.current, randomizeRef.current])
 
+  // DONT ERASE THIS, RECOIL REFERENCE
   const nextGeneration = () => {
     simulateAutomata()
   }

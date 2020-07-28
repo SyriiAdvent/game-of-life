@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
-import { startGame, nextLife, resetGame, generationState, gridStatus } from '../../stateStore/atoms'
+import { startGame, nextLife, resetGame, generationState, gridStatus, randomizeGrid } from '../../stateStore/atoms'
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -17,8 +17,13 @@ const PlayerButton = () => {
   const [nextFrame, setNextFrame] = useRecoilState(nextLife)
   const [reset, setReset] = useRecoilState(resetGame)
   const [showGrid, setShowGrid] = useRecoilState(gridStatus)
+  const [random, setRandom] = useRecoilState(randomizeGrid)
   return (
     <div>
+      <Button 
+        color='primary'
+        onClick={() => setRandom(true)}
+      >Random</Button>
       <IconButton
         color='primary'
         onClick={() => setShowGrid(prev => !prev)}
@@ -32,6 +37,7 @@ const PlayerButton = () => {
          <PlayArrowIcon />}
       </IconButton>
       <IconButton
+        disabled={liveGame}
         color='secondary'
         onClick={() => {
           if(!nextFrame) {
