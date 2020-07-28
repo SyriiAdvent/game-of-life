@@ -6,6 +6,7 @@ import Node from "./Node";
 import produce from 'immer'
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { generationState, animSpeed, startGame, nextLife, resetGame } from '../../stateStore/atoms'
+import { mouseStatus } from '../../stateStore/selecters'
 
 interface StyleProps {
   root: BaseCSSProperties;
@@ -45,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
   const [nextFrame, setNextFrame] = useRecoilState(nextLife)
   const [reset, setReset] = useRecoilState(resetGame)
   const speed = useRecoilValue(animSpeed)
+  const mouseDown = useRecoilValue(mouseStatus)
   const [grid, setGrid] = useState<IGrid>([]);
   const [gridSize, setGridSize] = useState<IGridSize>({
     cols: 25,
@@ -82,7 +84,10 @@ const useStyles = makeStyles((theme: Theme) =>
   const nodeSelectUpdater = (col: number, row: number) => {
     const newArr = grid.map((column: any[], i: number) => {
       return column.map((rowPosition: number, j: number) => {
-        if (row === j && col === i) {
+        if(mouseDown && row === j && col === i && rowPosition === 1) {
+          return rowPosition
+        }
+        else if (row === j && col === i) {
           return rowPosition === 0 ? 1 : 0
         } else {
           return rowPosition;
