@@ -8,6 +8,10 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { generationState, animSpeed, startGame, nextLife, resetGame, randomizeGrid } from '../../stateStore/atoms'
 import { mouseStatus } from '../../stateStore/selecters'
 import { useLocalStorage } from '../../utils/useLocalStorage'
+// preset grid structures
+import { generateToad } from '../../utils/generateToad'
+import { generateBlinkers } from '../../utils/generateBlinkers'
+import { generatePulsar } from '../../utils/generatePulsar'
 
 interface StyleProps {
   root: BaseCSSProperties;
@@ -33,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       height: "100%",
       display: "grid",
-      gridTemplateColumns: `repeat(25, 25px)`,
+      gridTemplateColumns: `repeat(35, 25px)`,
       // NEED TO PASS IN COL SIZE VIA PROPS
     },
   })
@@ -53,8 +57,8 @@ const useStyles = makeStyles((theme: Theme) =>
   const mouseDown = useRecoilValue(mouseStatus)
   const [grid, setGrid] = useState<IGrid>([]);
   const [gridSize, setGridSize] = useState<IGridSize>({
-    cols: 25,
-    rows: 20,
+    cols: 35,
+    rows: 35,
   });
   const { rows, cols } = gridSize;
   const neighborPositions = [
@@ -202,6 +206,9 @@ const useStyles = makeStyles((theme: Theme) =>
         })}
       </div>
       <button onClick={() => setSaveGrid(grid)}>save grid</button>
+      <button onClick={() => setGrid(prev => generateToad(prev))}>Toad</button>
+      <button onClick={() => setGrid(prev => generateBlinkers(prev))}>Blinkers</button>
+      <button onClick={() => setGrid(prev => generatePulsar(prev))}>Pulsar</button>
     </Paper>
   );
 };
