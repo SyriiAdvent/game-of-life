@@ -1,12 +1,17 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import { BaseCSSProperties } from "@material-ui/core/styles/withStyles";
-import { Paper } from "@material-ui/core";
+import { Paper, Button } from "@material-ui/core";
 import Node from "./Node";
 import produce from 'immer'
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { generationState, animSpeed, startGame, nextLife, resetGame, randomizeGrid } from '../../stateStore/atoms'
 import { mouseStatus } from '../../stateStore/selecters'
+import { useLocalStorage } from '../../utils/useLocalStorage'
+// preset grid structures
+import { generateToad } from '../../utils/generateToad'
+import { generateBlinkers } from '../../utils/generateBlinkers'
+import { generatePulsar } from '../../utils/generatePulsar'
 
 interface StyleProps {
   root: BaseCSSProperties;
@@ -25,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
+      flexDirection: 'column',
       justifyContent: "center",
     },
 
@@ -35,6 +41,10 @@ const useStyles = makeStyles((theme: Theme) =>
       gridTemplateColumns: `repeat(25, 25px)`,
       // NEED TO PASS IN COL SIZE VIA PROPS
     },
+    buttonsBox: {
+      display: "flex",
+      justifyContent: "center",
+    }
   })
   );
 
@@ -42,6 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
   // We will create the grid in this component
   const Grid = () => {
   const cls = useStyles();
+  const [saveGrid, setSaveGrid] = useLocalStorage('pulsar', [])
   const [generation, setGeneration] = useRecoilState(generationState);
   const [nextFrame, setNextFrame] = useRecoilState(nextLife)
   const [reset, setReset] = useRecoilState(resetGame)
@@ -52,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
   const [grid, setGrid] = useState<IGrid>([]);
   const [gridSize, setGridSize] = useState<IGridSize>({
     cols: 25,
-    rows: 20,
+    rows: 25,
   });
   const { rows, cols } = gridSize;
   const neighborPositions = [
@@ -76,11 +87,6 @@ const useStyles = makeStyles((theme: Theme) =>
   const initilizeGrid = useCallback(() => {
     setGrid(() => Array(rows).fill(Array(cols).fill(0)));
   }, [rows, cols]);
-
-  const randNum = () => {
-    let x = Math.round(Math.random())
-    return x
-  }
 
   const initRandomGrid = useCallback(() => {
     setGrid(() => {
@@ -154,10 +160,10 @@ const useStyles = makeStyles((theme: Theme) =>
       })
     })
 
+    setGeneration(prev => prev + 1)
     if(liveRef.current) {
       setTimeout(simulateAutomata, speedRef.current);
     }
-    setGeneration(prev => prev + 1)
   }, [])
 
   useEffect(() => {
@@ -204,6 +210,11 @@ const useStyles = makeStyles((theme: Theme) =>
           ));
         })}
       </div>
+      <Paper elevation={2} className={cls.buttonsBox}>
+        <Button color='primary' onClick={() => setGrid(prev => generateToad(prev))}>Toad</Button>
+        <Button color='primary' onClick={() => setGrid(prev => generateBlinkers(prev))}>Blinkers</Button>
+        <Button color='primary' onClick={() => setGrid(prev => generatePulsar(prev))}>Pulsar</Button>
+      </Paper>
     </Paper>
   );
 };
