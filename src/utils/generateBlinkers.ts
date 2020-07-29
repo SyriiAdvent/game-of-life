@@ -14,26 +14,20 @@ export const generateBlinkers = (arr: any) => {
     }
     // top middle pillars
     for (let i = y - 4; i <= y + 10; i++) {
-      if (i === y - 7 + 6 ||
-          i === y - 7 + 7 || 
-          i === y - 7 + 10 ||
-          i === y - 7 + 13 ||
-          i === y - 7 + 14) {
-        pulsar[x - 3][i - pillar] = 0;
-      } else {
+      if (i < y - 7 + 6 ||
+          i > y - 7 + 14) {
         pulsar[x - 3][i - pillar] = 1;
+      } else {
+        pulsar[x - 3][i - pillar] = 0;
       }
     }
     // bottom middle pillars
     for (let i = y - 4; i <= y + 10; i++) {
-      if (i === y - 7 + 6 ||
-          i === y - 7 + 7 || 
-          i === y - 7 + 10 ||
-          i === y - 7 + 13 ||
-          i === y - 7 + 14) {
-        pulsar[x + 3][i - pillar] = 0;
-      } else {
+      if (i < y - 7 + 6 ||
+          i > y - 7 + 14) {
         pulsar[x + 3][i - pillar] = 1;
+      } else {
+        pulsar[x + 3][i - pillar] = 0;
       }
     }
   })

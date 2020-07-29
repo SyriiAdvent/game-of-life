@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import { BaseCSSProperties } from "@material-ui/core/styles/withStyles";
-import { Paper } from "@material-ui/core";
+import { Paper, Button } from "@material-ui/core";
 import Node from "./Node";
 import produce from 'immer'
 import { useRecoilValue, useRecoilState } from 'recoil';
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
+      flexDirection: 'column',
       justifyContent: "center",
     },
 
@@ -37,9 +38,13 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       height: "100%",
       display: "grid",
-      gridTemplateColumns: `repeat(35, 25px)`,
+      gridTemplateColumns: `repeat(25, 25px)`,
       // NEED TO PASS IN COL SIZE VIA PROPS
     },
+    buttonsBox: {
+      display: "flex",
+      justifyContent: "center",
+    }
   })
   );
 
@@ -57,8 +62,8 @@ const useStyles = makeStyles((theme: Theme) =>
   const mouseDown = useRecoilValue(mouseStatus)
   const [grid, setGrid] = useState<IGrid>([]);
   const [gridSize, setGridSize] = useState<IGridSize>({
-    cols: 35,
-    rows: 35,
+    cols: 25,
+    rows: 25,
   });
   const { rows, cols } = gridSize;
   const neighborPositions = [
@@ -205,10 +210,11 @@ const useStyles = makeStyles((theme: Theme) =>
           ));
         })}
       </div>
-      <button onClick={() => setSaveGrid(grid)}>save grid</button>
-      <button onClick={() => setGrid(prev => generateToad(prev))}>Toad</button>
-      <button onClick={() => setGrid(prev => generateBlinkers(prev))}>Blinkers</button>
-      <button onClick={() => setGrid(prev => generatePulsar(prev))}>Pulsar</button>
+      <Paper elevation={2} className={cls.buttonsBox}>
+        <Button color='primary' onClick={() => setGrid(prev => generateToad(prev))}>Toad</Button>
+        <Button color='primary' onClick={() => setGrid(prev => generateBlinkers(prev))}>Blinkers</Button>
+        <Button color='primary' onClick={() => setGrid(prev => generatePulsar(prev))}>Pulsar</Button>
+      </Paper>
     </Paper>
   );
 };
