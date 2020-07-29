@@ -7,6 +7,7 @@ import produce from 'immer'
 import { useRecoilValue, useRecoilState } from 'recoil';
 import { generationState, animSpeed, startGame, nextLife, resetGame, randomizeGrid } from '../../stateStore/atoms'
 import { mouseStatus } from '../../stateStore/selecters'
+import { useLocalStorage } from '../../utils/useLocalStorage'
 
 interface StyleProps {
   root: BaseCSSProperties;
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
   // We will create the grid in this component
   const Grid = () => {
   const cls = useStyles();
+  const [saveGrid, setSaveGrid] = useLocalStorage('pulsar', [])
   const [generation, setGeneration] = useRecoilState(generationState);
   const [nextFrame, setNextFrame] = useRecoilState(nextLife)
   const [reset, setReset] = useRecoilState(resetGame)
@@ -76,11 +78,6 @@ const useStyles = makeStyles((theme: Theme) =>
   const initilizeGrid = useCallback(() => {
     setGrid(() => Array(rows).fill(Array(cols).fill(0)));
   }, [rows, cols]);
-
-  const randNum = () => {
-    let x = Math.round(Math.random())
-    return x
-  }
 
   const initRandomGrid = useCallback(() => {
     setGrid(() => {
@@ -154,10 +151,10 @@ const useStyles = makeStyles((theme: Theme) =>
       })
     })
 
+    setGeneration(prev => prev + 1)
     if(liveRef.current) {
       setTimeout(simulateAutomata, speedRef.current);
     }
-    setGeneration(prev => prev + 1)
   }, [])
 
   useEffect(() => {
@@ -204,6 +201,7 @@ const useStyles = makeStyles((theme: Theme) =>
           ));
         })}
       </div>
+      <button onClick={() => setSaveGrid(grid)}>save grid</button>
     </Paper>
   );
 };
