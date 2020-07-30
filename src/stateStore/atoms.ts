@@ -55,3 +55,10 @@ export const randomizeGrid = atom({
   key: 'randomizeGrid',
   default: false
 })
+
+// Game Rules Atom
+
+export const rulesModal = atom({
+  key: 'rulesModal',
+  default: true,
+});

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import ColorManager from './components/themePalette/ColorManager';
 import GameOfLife from './components/gameOfLife/GameOfLife';
+import RulesModal from './components/gameOfLife/RulesModal';
 import NavigationBar from './components/navbar/NavigationBar';
 import { useRecoilState } from 'recoil';
 import { mouseDownState } from './stateStore/atoms'
