@@ -1,3 +1,5 @@
+live App: [Game of Life](httpsgameoflife.rudyg.dev)
+
 A implementation of Conway's "Game of Life" Using 
 - [Typescript](https://www.typescriptlang.org/index.html) 
 - [React](https://reactjs.org/) 
@@ -16,6 +18,9 @@ These rules, which compare the behavior of the automaton to real life, can be co
 - Any live cell with two or three live neighbours survives.
 - Any dead cell with three live neighbours becomes a live cell.
 - All other live cells die in the next generation. Similarly, all other dead cells stay dead.
+
+![Image of random structure](https://i.imgur.com/QmeZRnx.png) 
+![Gif of Pulsar structure](https://i.imgur.com/AheGA22.gif)
 
 
 Examples of patterns
