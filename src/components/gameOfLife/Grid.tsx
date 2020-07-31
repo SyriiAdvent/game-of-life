@@ -40,8 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     grid: {
-      // width: "100%",
-      // height: "100%",
       display: "grid",
       gridTemplateColumns: `repeat(40, 20px)`,
       // NEED TO PASS IN COL SIZE VIA PROPS
@@ -55,13 +53,6 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-
-// const StyledGrid = styled.div`
-//   /* width: "100%"; */
-//   /* height: "100%"; */
-//   display: "grid";
-//   grid-template-rows: repeat(75, 25px);
-// `
   
   // We will create the grid in this component
   const Grid = () => {
