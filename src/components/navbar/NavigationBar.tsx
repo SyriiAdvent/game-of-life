@@ -36,6 +36,11 @@ const NavigationBar = () => {
           </Typography>
           <Button 
             color="inherit"
+            href="https://github.com/SyriiAdvent/game-of-life"
+            target='_blank'
+          >GitHub</Button>
+          <Button 
+            color="inherit"
             onClick={() => setOpenModal(true)}
           >Rules</Button>
           <RulesModal />
