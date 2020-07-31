@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       width: 650,
       backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
     },
@@ -63,7 +62,7 @@ const RulesModal = () => {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Conways Game of Life</h2>
+      <h2 id="simple-modal-title">Conway's Game of Life</h2>
       <p id="simple-modal-description">
         The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, live or dead, (or populated and unpopulated, respectively). Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
       </p>
@@ -73,13 +72,31 @@ const RulesModal = () => {
         <li className={classes.listItems}>Any live cell with more than three live neighbours dies, as if by overpopulation.</li>
         <li className={classes.listItems}>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
       </ul>
+
+      <h2 id="simple-modal-title">Controls</h2>
       <p>
-        These rules, which compare the behavior of the automaton to real life, can be condensed into the following:
+        You will find controls below to manage the simulations state:
       </p>
+
       <ul>
-        <li className={classes.listItems}>Any live cell with two or three live neighbours survives.</li>
-        <li className={classes.listItems}>Any dead cell with three live neighbours becomes a live cell.</li>
-        <li className={classes.listItems}>All other live cells die in the next generation. Similarly, all other dead cells stay dead.</li>
+        <li className={classes.listItems}>
+          [Random]: Will randomize the live cells on the grid
+        </li>
+        <li className={classes.listItems}>
+          [Show/Hide Grid]: Will enable or disable grid display.
+        </li>
+        <li className={classes.listItems}>
+          [Play/Pause]: Start or Stop simulation 
+        </li>
+        <li className={classes.listItems}>
+          [Skip]: This will skip the current generation by 1 (Disabled when running.)
+        </li>
+        <li className={classes.listItems}>
+          [Life Speed]: You can also control how fast cells generate, or slow!
+        </li>
+        <li className={classes.listItems}>
+          [Presets]: You will see three preset generators above the controls, pause the simulation and try them out!
+        </li>
       </ul>
     </div>
   );

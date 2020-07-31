@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 import { BaseCSSProperties } from "@material-ui/core/styles/withStyles";
-import { Card, Paper } from '@material-ui/core';
+import { Card } from '@material-ui/core';
 import Grid from './Grid'
 import SlideController from '../controls/SlideController'
 import PlayerButton from '../controls/PlayerButton';
-import { useRecoilValue, useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { currentGeneration } from '../../stateStore/selecters'
-import { animSpeed } from '../../stateStore/atoms'
 
 interface StyleProps {
   root: BaseCSSProperties,
@@ -16,21 +15,20 @@ interface StyleProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      padding: theme.spacing(1),
-      // width: "99%",
       display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "space-evenly",
-      // backgroundColor: '#F5F5F5'
+      flexDirection: 'column',
+      justifyContent: "center",
+      flexGrow: 1,
     },
     controlBox: {
-      margin: theme.spacing(2),
+      paddingTop: theme.spacing(3.5),
       display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
+      flexWrap: 'wrap',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
       alignItems: 'center',
-      width: 800,
-      backgroundColor: '#F0F0F0'
+      width: '100%',
+      backgroundColor: '#0c1216',
     },
   })
 );
@@ -44,8 +42,8 @@ const GameOfLife = () => {
   return (
     <div className={cls.root}>
       <Grid />
-      <Card elevation={2} className={cls.controlBox}>
-        <h4>Generation: {generation}</h4>
+      <Card elevation={5} className={cls.controlBox} square>
+        <h3 style={{ textAlign: 'center', marginRight: '0.5rem', color: 'white' }} >Generation: {generation}</h3>
         <PlayerButton />
         <SlideController  />
       </Card>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React  from 'react'
 import styled from 'styled-components'
 import { mouseStatus, showGrid } from '../../stateStore/selecters'
 import { useRecoilValue } from 'recoil'
@@ -7,10 +7,10 @@ import { useRecoilValue } from 'recoil'
 // you must type declare any passed in props with TS & Styled-Components
 const StyledNode = styled.div<{ status: number, border: boolean }>`
   display: flex;
-  width: 25px;
-  height: 25px; 
-  background-color: ${props => (props.status === 1 ? 'black' : 'white')};
-  border: ${props => props.border ? 'solid #E6E6E6 1px' : 'none'};
+  min-width: 20px;
+  min-height: 20px; 
+  background-color: ${props => (props.status === 1 ? '#0078db' : '#0c1216')};
+  border: ${props => props.border ? 'solid #E6E6E6 0.5px' : 'none'};
 
   &:hover {
     background-color: #27A9FF;

@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react';
 import ColorManager from './components/themePalette/ColorManager';
 import GameOfLife from './components/gameOfLife/GameOfLife';
-import RulesModal from './components/gameOfLife/RulesModal';
+import styled from 'styled-components'
 import NavigationBar from './components/navbar/NavigationBar';
 import { useRecoilState } from 'recoil';
 import { mouseDownState } from './stateStore/atoms'
 
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /* background-color: white */
+
+`
 
 const mouseChecker = window.addEventListener('mousedown', () => {
   
@@ -28,11 +35,11 @@ function App() {
   }, [])
 
   return (
-    <ColorManager>
+    <MainContainer >
       <NavigationBar />
       <GameOfLife />
-    </ColorManager>
-  );
+    </MainContainer>
+  )
 }
 
 export default App;
