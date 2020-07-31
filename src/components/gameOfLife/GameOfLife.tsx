@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-
 // Main Component to Hold the board
 const GameOfLife = () => {
   const cls = useStyles();
@@ -43,7 +42,9 @@ const GameOfLife = () => {
     <div className={cls.root}>
       <Grid />
       <Card elevation={5} className={cls.controlBox} square>
-        <h3 style={{ textAlign: 'center', marginRight: '0.5rem', color: 'white' }} >Generation: {generation}</h3>
+        <h3 
+          style={{ textAlign: 'center', marginRight: '0.5rem', color: 'white', display: 'flex' }} 
+        >Generation: <div style={{ minWidth: '50px', textAlign: 'left', paddingLeft: '5px' }}>{` ${generation}`}</div></h3>
         <PlayerButton />
         <SlideController  />
       </Card>
