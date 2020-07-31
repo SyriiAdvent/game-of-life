@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { startGame, nextLife, resetGame, generationState, gridStatus, randomizeGrid } from '../../stateStore/atoms'
 import IconButton from '@material-ui/core/IconButton';
@@ -10,6 +10,10 @@ import ReplayIcon from '@material-ui/icons/Replay';
 
 import GridOffIcon from '@material-ui/icons/GridOff';
 import GridOnIcon from '@material-ui/icons/GridOn';
+import InvertColorsOffIcon from '@material-ui/icons/InvertColorsOff';
+import InvertColorsIcon from '@material-ui/icons/InvertColors';
+import { Switch } from '@material-ui/core';
+import { randColorState } from '../../stateStore/gridAtoms';
 
 const PlayerButton = () => {
   const [liveGame, setLiveGame] = useRecoilState(startGame)
@@ -18,8 +22,16 @@ const PlayerButton = () => {
   const [reset, setReset] = useRecoilState(resetGame)
   const [showGrid, setShowGrid] = useRecoilState(gridStatus)
   const [random, setRandom] = useRecoilState(randomizeGrid)
+  const [checked, setChecked] = useRecoilState(randColorState);
+
+
+
   return (
     <div>
+      <IconButton
+        color='primary'
+        onClick={() => setChecked(prev => !prev)}
+      >{checked ? <InvertColorsOffIcon /> : <InvertColorsIcon />}</IconButton>
       <Button 
         color='primary'
         onClick={() => setRandom(true)}

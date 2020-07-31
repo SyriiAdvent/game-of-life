@@ -80,6 +80,9 @@ const RulesModal = () => {
 
       <ul>
         <li className={classes.listItems}>
+          [Color Randomizer]: Will make every cell a random color.
+        </li>
+        <li className={classes.listItems}>
           [Random]: Will randomize the live cells on the grid
         </li>
         <li className={classes.listItems}>
