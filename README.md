@@ -24,8 +24,8 @@ The universe of the Game of Life is an infinite, two-dimensional orthogonal grid
 - Any dead cell with three live neighbours becomes a live cell.
 - All other live cells die in the next generation. Similarly, all other dead cells stay dead.
 
-![Image of random structure](https://i.imgur.com/QmeZRnx.png) 
-![Gif of Pulsar structure](https://i.imgur.com/AheGA22.gif)
+![Image of random structure](https://i.imgur.com/MvfMrWe.png) 
+![Gif of Pulsar structure](https://i.imgur.com/yCcoj38.gif)
 
 
 ### Examples of patterns
