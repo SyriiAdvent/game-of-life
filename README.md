@@ -1,9 +1,12 @@
-live App: [Game of Life](httpsgameoflife.rudyg.dev)
+# live App: [Game of Life](httpsgameoflife.rudyg.dev)
 
 A implementation of Conway's "Game of Life" Using 
 - [Typescript](https://www.typescriptlang.org/index.html) 
 - [React](https://reactjs.org/) 
 - [Recoil](https://github.com/facebookexperimental/Recoil) (Experimental State manager!!!)
+- [MaterialUI](https://material-ui.com/)
+- [Styled-Components](https://styled-components.com/)
+- [randomColor](https://www.npmjs.com/package/randomcolor)
 
 
 The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, live or dead, (or populated and unpopulated, respectively). Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
@@ -13,7 +16,7 @@ The universe of the Game of Life is an infinite, two-dimensional orthogonal grid
 - Any live cell with more than three live neighbours dies, as if by overpopulation.
 - Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
-These rules, which compare the behavior of the automaton to real life, can be condensed into the following:
+### These rules, which compare the behavior of the automaton to real life, can be condensed into the following:
 
 - Any live cell with two or three live neighbours survives.
 - Any dead cell with three live neighbours becomes a live cell.
@@ -23,7 +26,7 @@ These rules, which compare the behavior of the automaton to real life, can be co
 ![Gif of Pulsar structure](https://i.imgur.com/AheGA22.gif)
 
 
-Examples of patterns
+### Examples of patterns
 Many different types of patterns occur in the Game of Life, which are classified according to their behaviour. Common pattern types include: still lifes, which do not change from one generation to the next; oscillators, which return to their initial state after a finite number of generations; and spaceships, which translate themselves across the grid.
 
 The earliest interesting patterns in the Game of Life were discovered without the use of computers. The simplest still lifes and oscillators were discovered while tracking the fates of various small starting configurations using graph paper, blackboards, and physical game boards, such as those used in go. During this early research, Conway discovered that the R-pentomino failed to stabilize in a small number of generations. In fact, it takes 1103 generations to stabilize, by which time it has a population of 116 and has generated six escaping gliders; these were the first spaceships ever discovered.
