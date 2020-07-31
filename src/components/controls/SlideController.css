@@ -1,7 +1,17 @@
 .MuiSlider-thumb:not(.MuiSlider-active) {
   transition: left 1s ease-in;
+  z-index: 999;
 }
 
 .MuiSlider-track {
   transition: width 1s ease-in;
+}
+
+
+.MuiSlider-markLabel:not(MuiSlider-markLabelActive) {
+  color: white;
+}
+
+.MuiSlider-markLabel.MuiSlider-markLabelActive:last {
+  color: cyan;
 }
