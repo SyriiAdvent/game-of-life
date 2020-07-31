@@ -13,3 +13,9 @@ export const gridSizeState = atom({
     cellSize: 20
   }
 })
+
+
+export const randColorState = atom({
+  key: 'randColorState',
+  default: false
+})
