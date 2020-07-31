@@ -10,7 +10,9 @@ const StyledNode = styled.div<{ status: number, border: boolean }>`
   min-width: 20px;
   min-height: 20px; 
   background-color: ${props => (props.status === 1 ? '#0078db' : '#0c1216')};
-  border: ${props => props.border ? 'solid #E6E6E6 0.5px' : 'none'};
+  box-shadow: ${props => props.border ?
+    `0 1px 0 0 #182228, 0 -1px 0 0 #182228, -1px 0 0 0 #182228, 1px 0 0 0 #182228, 0 0 0 1px #182228;` : 'none'};
+
 
   &:hover {
     background-color: #27A9FF;

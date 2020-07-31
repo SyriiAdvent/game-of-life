@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'row',
       justifyContent: "center",
       marginTop: 'auto',
+      backgroundColor: 'transparent'
     }
   })
 );
@@ -226,20 +227,23 @@ const useStyles = makeStyles((theme: Theme) =>
           </div>
         </div>
 
-        <Paper elevation={2} className={cls.buttonsBox}>
+        <Paper elevation={3} className={cls.buttonsBox}>
           <div>
             <Button
               color='primary'
+              variant='text'
               onClick={() => setGrid(prev => generateToad(prev))}>
               Toad
             </Button>
             <Button
               color='primary'
+              variant='text'
               onClick={() => setGrid(prev => generateBlinkers(prev))}>
               Blinkers
             </Button>
             <Button
               color='primary'
+              variant='text'
               onClick={() => setGrid(prev => generatePulsar(prev))}>
               Pulsar
             </Button>
