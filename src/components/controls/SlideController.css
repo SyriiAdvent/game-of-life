@@ -1,10 +1,9 @@
 .MuiSlider-thumb:not(.MuiSlider-active) {
-  transition: left 1s ease-in;
-  z-index: 999;
+  transition: left 0.6s ease-in;
 }
 
 .MuiSlider-track {
-  transition: width 1s ease-in;
+  transition: width 0.6s ease-in;
 }
 
 
@@ -14,4 +13,12 @@
 
 .MuiSlider-markLabel.MuiSlider-markLabelActive:last {
   color: cyan;
+}
+
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-colorPrimary {
+  color: white
+}
+
+.MuiButton-label {
+  color: white
 }

@@ -1,5 +1,6 @@
 import { selector } from 'recoil'
 import { generationState, animSpeed, mouseDownState, gridStatus } from './atoms'
+import { randColorState } from './gridAtoms'
 
 export const currentGeneration = selector({
   key: 'currentGeneration',
@@ -29,6 +30,14 @@ export const showGrid = selector({
   key: 'showGrid',
   get: ({get}) => {
     const state = get(gridStatus)
+    return state
+  },
+})
+
+export const checkRandColor = selector({
+  key: 'checkRandColor',
+  get: ({get}) => {
+    const state = get(randColorState)
     return state
   },
 })
